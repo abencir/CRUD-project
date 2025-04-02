@@ -15,11 +15,11 @@
         <div class="inputs">
             <input type="text" id="title" placeholder="title">
             <div class="price">
-                <input type="number" id="price" placeholder="Price">
-                <input type="number" id="taxes" placeholder="Taxes">
-                <input type="number" id="ads" placeholder="Ads">
-                <input type="number" id="discount" placeholder="Discount">
-                <small id="total">19999</small>
+                <input onkeyup="GetTotal()" type="number" id="price" placeholder="Price">
+                <input onkeyup="GetTotal()" type="number" id="taxes" placeholder="Taxes">
+                <input onkeyup="GetTotal()" type="number" id="ads" placeholder="Ads">
+                <input onkeyup="GetTotal()" type="number" id="discount" placeholder="Discount">
+                <small id="total">0</small>
             </div>
             <input type="number" id="count" placeholder="Count">
             <input type="text" id="category" placeholder="Category">
@@ -41,56 +41,15 @@
                 <th>ADS</th>
                 <th>DISCOUNT</th>
                 <th>CATEGORY</th>
+                <th>TOTAL</th>
                 <th>UPDATE</th>
                 <th>DELETE</th>
             </tr>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>samsung</td>
-                    <td>2000</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>0</td>
-                    <td>phone</td>
-                    <td><button>Update</button></td>
-                    <td><button>DELETE</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>samsung</td>
-                    <td>2000</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>0</td>
-                    <td>phone</td>
-                    <td><button>Update</button></td>
-                    <td><button>DELETE</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>samsung</td>
-                    <td>2000</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>0</td>
-                    <td>phone</td>
-                    <td><button>Update</button></td>
-                    <td><button>DELETE</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>samsung</td>
-                    <td>2000</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>0</td>
-                    <td>phone</td>
-                    <td><button>Update</button></td>
-                    <td><button>DELETE</button></td>
-                </tr>
+            <tbody id="table">
+
             </tbody>
         </table>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
