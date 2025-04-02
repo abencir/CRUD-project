@@ -84,3 +84,6 @@ button:hover{
     background-color: rgb(170, 170, 170);
     letter-spacing: 1px;
 }
+#delet{
+    margin: 10px 0;
+}
