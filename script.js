@@ -8,6 +8,8 @@ let title = document.getElementById("title");
 let category = document.getElementById("category");
 let count = document.getElementById("count");
 let ListProducts;
+let mod = 'creat';
+let xvar;
 
 if (localStorage.product != null) {
   ListProducts = JSON.parse(localStorage.product);
@@ -47,7 +49,7 @@ function ShowProducts() {
         <td>${ListProducts[i].discount}</td>
         <td>${ListProducts[i].category}</td>
         <td>${ListProducts[i].total}</td>
-        <td><button>Update</button></td>
+        <td><button onclick = "UpdateProduct(${i})">Update</button></td>
         <td><button onclick = "DeleteProduct(${i})">Delete</button></td>
     </tr>`;
   }
@@ -55,7 +57,7 @@ function ShowProducts() {
 
   let delet_btn = document.getElementById('delet');
   if(ListProducts.length > 0 ){
-        delet_btn.innerHTML = `<button onclick = "DeletAll()">Delete All</button>`;
+        delet_btn.innerHTML = `<button onclick = "DeletAll()">Delete All (${ListProducts.length})</button>`;
   }
   else{
     delet_btn.innerHTML = '';
@@ -72,7 +74,24 @@ function DeletAll(){
     ShowProducts();
 }
 
+function UpdateProduct(i) {
+    xvar = i
+    title.value = ListProducts[i].title
+    price.value = ListProducts[i].price
+    taxes.value = ListProducts[i].taxes
+    ads.value = ListProducts[i].ads
+    discount.value = ListProducts[i].discount
+    category.value = ListProducts[i].category
+    GetTotal()
+    count.style.display = 'none'
+    mod = 'update'
+    submit.innerHTML = 'Update'
+    scroll({
+        top: 0,
+        behavior: 'smooth'
+    })
 
+}
 
 submit.onclick = function () {
   let new_product = {
@@ -85,9 +104,25 @@ submit.onclick = function () {
     count: count.value,
     total: total.innerHTML,
   };
-  ListProducts.push(new_product);
+  if (mod == 'creat'){
+    if (count.value > 1){
+        for(x=0; x<count.value; x++){
+            ListProducts.push(new_product);
+        }
+      }else{
+        ListProducts.push(new_product);
+      }
+      
+  }else{
+    ListProducts[xvar] = new_product;
+    count.style.display = 'block'
+    submit.innerHTML = 'Creat'
+    mod = 'creat'
+  }
   localStorage.setItem("product", JSON.stringify(ListProducts));
   ClearInputs();
+  GetTotal()
   ShowProducts();
 };
 ShowProducts();
+\
