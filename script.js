@@ -7,8 +7,9 @@ let submit = document.getElementById("add");
 let title = document.getElementById("title");
 let category = document.getElementById("category");
 let count = document.getElementById("count");
+let search = document.getElementById("search");
 let ListProducts;
-let mod = 'creat';
+let mod = "creat";
 let xvar;
 
 if (localStorage.product != null) {
@@ -55,12 +56,11 @@ function ShowProducts() {
   }
   document.getElementById("table").innerHTML = table;
 
-  let delet_btn = document.getElementById('delet');
-  if(ListProducts.length > 0 ){
-        delet_btn.innerHTML = `<button onclick = "DeletAll()">Delete All (${ListProducts.length})</button>`;
-  }
-  else{
-    delet_btn.innerHTML = '';
+  let delet_btn = document.getElementById("delet");
+  if (ListProducts.length > 0) {
+    delet_btn.innerHTML = `<button onclick = "DeletAll()">Delete All (${ListProducts.length})</button>`;
+  } else {
+    delet_btn.innerHTML = "";
   }
 }
 function DeleteProduct(i) {
@@ -68,61 +68,126 @@ function DeleteProduct(i) {
   localStorage.product = JSON.stringify(ListProducts);
   ShowProducts();
 }
-function DeletAll(){
-    localStorage.clear;
-    ListProducts.splice(0);
-    ShowProducts();
+function DeletAll() {
+  localStorage.clear;
+  ListProducts.splice(0);
+  ShowProducts();
+}
+function UpdateProduct(i) {
+  xvar = i;
+  title.value = ListProducts[i].title;
+  price.value = ListProducts[i].price;
+  taxes.value = ListProducts[i].taxes;
+  ads.value = ListProducts[i].ads;
+  discount.value = ListProducts[i].discount;
+  category.value = ListProducts[i].category;
+  GetTotal();
+  count.style.display = "none";
+  mod = "update";
+  submit.innerHTML = "Update";
+  scroll({
+    top: 0,
+    behavior: "smooth",
+  });
 }
 
-function UpdateProduct(i) {
-    xvar = i
-    title.value = ListProducts[i].title
-    price.value = ListProducts[i].price
-    taxes.value = ListProducts[i].taxes
-    ads.value = ListProducts[i].ads
-    discount.value = ListProducts[i].discount
-    category.value = ListProducts[i].category
-    GetTotal()
-    count.style.display = 'none'
-    mod = 'update'
-    submit.innerHTML = 'Update'
-    scroll({
-        top: 0,
-        behavior: 'smooth'
-    })
+let searchmod = "title";
+function getsearchmod(id) {
+  search.focus();
+  if (id == "btitle") {
+    searchmod = "title";
+    search.placeholder = "Search By Title";
+  } else {
+    searchmod = "category";
+    search.placeholder = "Search By Category";
+  }
+  search.value = ''
+  ShowProducts()
+}
 
+function SearchProduct(value) {
+  let table = "";
+  for (let x = 0; x < ListProducts.length; x++) {
+      if (searchmod == "title") {
+          if (ListProducts[x].title.includes(value.toLowerCase())) {
+            table += `<tr>
+            <td>${x + 1}</td>
+            <td>${ListProducts[x].title}</td>
+            <td>${ListProducts[x].price}</td>
+            <td>${ListProducts[x].taxes}</td>
+            <td>${ListProducts[x].ads}</td>
+            <td>${ListProducts[x].discount}</td>
+            <td>${ListProducts[x].category}</td>
+            <td>${ListProducts[x].total}</td>
+            <td><button onclick = "UpdateProduct(${x})">Update</button></td>
+            <td><button onclick = "DeleteProduct(${x})">Delete</button></td>
+        </tr>`;
+          }
+        }
+      else {
+        
+          if (ListProducts[x].category.includes(value.toLowerCase())) {
+              table += `<tr>
+              <td>${x + 1}</td>
+              <td>${ListProducts[x].title}</td>
+              <td>${ListProducts[x].price}</td>
+              <td>${ListProducts[x].taxes}</td>
+              <td>${ListProducts[x].ads}</td>
+              <td>${ListProducts[x].discount}</td>
+              <td>${ListProducts[x].category}</td>
+              <td>${ListProducts[x].total}</td>
+              <td><button onclick = "UpdateProduct(${x})">Update</button></td>
+              <td><button onclick = "DeleteProduct(${x})">Delete</button></td>
+          </tr>`;
+          }
+        }
+  }
+  
+  document.getElementById("table").innerHTML = table;
 }
 
 submit.onclick = function () {
   let new_product = {
-    title: title.value,
+    title: title.value.toLowerCase(),
     price: price.value,
     taxes: taxes.value,
     ads: ads.value,
     discount: discount.value,
-    category: category.value,
+    category: category.value.toLowerCase(),
     count: count.value,
     total: total.innerHTML,
   };
-  if (mod == 'creat'){
-    if (count.value > 1){
-        for(x=0; x<count.value; x++){
+    if (title.value == ''){
+      title.style.border = '1px red solid'
+    }
+    else if (price.value == ''){
+      price.style.border = '1px red solid'
+    }
+    else if (category.value == ''){
+      category.style.border = '1px red solid'
+    }
+    else{
+      title.style.border = 'none'
+      category.style.border = 'none'
+      price.style.border = 'none'
+      if (mod == "creat") {
+        if (count.value > 1) {
+          for (x = 0; x < count.value; x++) {
             ListProducts.push(new_product);
+          }
+        } else {
+          ListProducts.push(new_product);
         }
-      }else{
-        ListProducts.push(new_product);
+      } else {
+        ListProducts[xvar] = new_product;
+        count.style.display = "block";
+        submit.innerHTML = "Creat";
+        mod = "creat";
       }
-      
-  }else{
-    ListProducts[xvar] = new_product;
-    count.style.display = 'block'
-    submit.innerHTML = 'Creat'
-    mod = 'creat'
-  }
+      ClearInputs();
+    }
   localStorage.setItem("product", JSON.stringify(ListProducts));
-  ClearInputs();
-  GetTotal()
+  GetTotal();
   ShowProducts();
 };
 ShowProducts();
-\

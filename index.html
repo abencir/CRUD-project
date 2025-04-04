@@ -26,10 +26,10 @@
             <button id="add">Creat</button>
         </div>
         <div class="outpots">
-            <input type="text" id="search" placeholder="Search">
+            <input type="text" id="search" placeholder="Search" onkeyup="SearchProduct(this.value)">
             <div class="filtre">
-                <button>Search By Title</button>
-                <button>Search By Category</button>
+                <button onclick="getsearchmod(this.id)" id="btitle">Search By Title</button>
+                <button onclick="getsearchmod(this.id)" id="bcategory">Search By Category</button>
             </div>
         </div>
         <div id="delet">
