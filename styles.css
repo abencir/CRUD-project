@@ -87,3 +87,28 @@ button:hover{
 #delet{
     margin: 10px 0;
 }
+
+.mood{
+    width: 60px;
+    height: 30px;
+    background-color:#1e1e1e;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;}
+.mood::before{
+    content: '';
+    position: absolute;
+    top: 3px ;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50px;
+    transition: transform 0.3s;
+}
+.mood.active{
+    background-color: #ccc;
+}
+.mood.active::before{
+    transform: translateX(30px);
+}

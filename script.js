@@ -191,3 +191,40 @@ submit.onclick = function () {
   ShowProducts();
 };
 ShowProducts();
+
+let mood = document.querySelector('.mood');
+
+
+// DARK MOD FUNCTION //
+const buttons =document.querySelectorAll('button');
+const inputs =document.querySelectorAll('input');
+function MoodChange(){
+  if (document.querySelector('.mood').classList.contains('active')){
+    mood.classList.remove('active');
+    document.body.style.backgroundColor = '#fff'
+    document.getElementById('table-dark').style.color = '#111'
+    document.getElementById('head').style.color = '#111'
+    buttons.forEach(button => {
+      button.style.backgroundColor = '#3f37c9'
+      button.style.color = '#fff'
+      button.style.border = 'none'
+    })
+    inputs.forEach(input => {
+      input.style.backgroundColor = '#ccc'
+      input.style.color = 'black'
+    })
+  }else{
+    mood.classList.add('active');
+    document.body.style.backgroundColor = '#1e1e1e'
+    document.getElementById('table-dark').style.color = '#fff'
+    document.getElementById('head').style.color = '#fff'
+    buttons.forEach(button => {
+      button.style.backgroundColor = '#fff'
+      button.style.color = 'black'
+    })
+    inputs.forEach(input => {
+      input.style.backgroundColor = '#111'
+      input.style.color = 'white'
+    })
+  }
+}
